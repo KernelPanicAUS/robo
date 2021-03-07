@@ -1,0 +1,8 @@
+{:app
+ {:database
+  {:adapter       "postgresql"
+   :username      "robo"
+   :password      "robo"
+   :database-name "robo"
+   :server-name   "morpheus.local"
+   :port-number   5432}}}
