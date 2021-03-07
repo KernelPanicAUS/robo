@@ -4,7 +4,7 @@
 
 (deftest addition-tests
   (is (= 5 (+ 3 2)))
-  (is (= 11 (+ 5 5))))
+  (is (= 10 (+ 5 5))))
 
 (deftest filter-function
   (is (= true (valid-row? {:company "Linus TTips", :symbol "LTT"})))
