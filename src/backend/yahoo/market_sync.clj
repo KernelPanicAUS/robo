@@ -46,5 +46,5 @@
 (defn sync-scheduler []
   (sched/schedule {:hour   01
                    :minute 00
-                   :day    [:mon :tue :wed :thur :fri]}
+                   :day    [:tue :wed :thur :fri :sat]}
                   sync-securities))
