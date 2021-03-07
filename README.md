@@ -1,14 +1,14 @@
-# backend
+# robo-backend [![Clojure CI](https://github.com/KernelPanicAUS/robo/actions/workflows/clojure.yml/badge.svg)](https://github.com/KernelPanicAUS/robo/actions/workflows/clojure.yml)
 
-A Clojure library designed to ... well, that part is up to you.
+Scrapes and stores all DAX listed securities, and their market close rates every 24 hours.
 
 ## Usage
 
-FIXME
+lein run
 
 ## License
 
-Copyright © 2021 FIXME
+Copyright © 2021 Thomas Khalil
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
