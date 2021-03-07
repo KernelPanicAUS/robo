@@ -1,23 +1,22 @@
 (ns backend.db
   (:require
-            [mount.core :as mount]
-            [hikari-cp.core :as hikari]
-            [toucan.db :as db]
-            [cheshire.core :as json]
-            [toucan.models :as models]
-            [backend.config :as config]
-            [taoensso.timbre :as timbre])
+   [mount.core :as mount]
+   [hikari-cp.core :as hikari]
+   [toucan.db :as db]
+   [cheshire.core :as json]
+   [toucan.models :as models]
+   [backend.config :as config]
+   [taoensso.timbre :as timbre])
   (:import [org.flywaydb.core Flyway]
            [org.postgresql.util PGobject]))
-
 
 (defn- make-datasource []
   (timbre/info "Instantiating hikari datasource...")
   (hikari/make-datasource (config/database)))
 
 (mount/defstate datasource
-                :start (make-datasource)
-                :stop (hikari/close-datasource datasource))
+  :start (make-datasource)
+  :stop (hikari/close-datasource datasource))
 
 (defn migrate []
   (timbre/info "running flyway db migrations...")
@@ -59,4 +58,4 @@
   )
 
 (mount/defstate toucan
-                :start (configure-toucan))
+  :start (configure-toucan))

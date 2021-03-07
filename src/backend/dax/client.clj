@@ -12,10 +12,10 @@
 
 (defn valid-row? [col]
   ((every-pred
-     #(not (nil? (:company %)))
-     #(not (nil? (:symbol %)))
-     #(not (= "Trading Symbol" (:symbol %)))
-     #(not (= "Company" (:company %)))) col))
+    #(not (nil? (:company %)))
+    #(not (nil? (:symbol %)))
+    #(not (= "Trading Symbol" (:symbol %)))
+    #(not (= "Company" (:company %)))) col))
 
 (defn- resolve-symbol [row]
   (let [symbol (get-symbol-for-isin (:isin row))]

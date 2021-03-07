@@ -37,7 +37,6 @@
                    (run! cpe)))
     (timbre/info (str "Task submitted for " symbol))))
 
-
 (defn sync-securities []
   (timbre/info "Starting sync for securities against yahoo! finance api...")
   (let [securities (get-securities)]

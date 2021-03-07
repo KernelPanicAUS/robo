@@ -45,11 +45,9 @@
                                                                                  "interval"             "1d",
                                                                                  "filter"               "history",
                                                                                  "frequency"            "1d",
-                                                                                 "includeAdjustedClose" "true"
-                                                                                 }}))
+                                                                                 "includeAdjustedClose" "true"}}))
       (catch Exception e
-        (println "error occurred" (.getMessage e)))))
-  )
+        (println "error occurred" (.getMessage e))))))
 
 (defn- csv-data->maps [csv-data]
   ;(timbre/debug "Mapping csv headers to map keys...")

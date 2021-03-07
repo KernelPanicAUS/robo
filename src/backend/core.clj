@@ -23,7 +23,7 @@
 
 (defn -main []
   (timbre/merge-config!
-    {:appenders {:spit (appenders/spit-appender {:fname "logs/output.log"})}})
+   {:appenders {:spit (appenders/spit-appender {:fname "logs/output.log"})}})
   (timbre/info "Starting app...")
   (start-app)
   (backend.yahoo.market-sync/sync-scheduler))

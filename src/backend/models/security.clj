@@ -9,15 +9,15 @@
 (declare Security)
 
 (defmodel Security :security
-          IModel
-          (properties [_]
-                      {:timestamped? true})
-          (primary-key [_] :id))
+  IModel
+  (properties [_]
+              {:timestamped? true})
+  (primary-key [_] :id))
 
 (defn check2 [security]
   (jdbc/with-db-connection [conn {:datasource datasource}]
-                           (let [rows (jdbc/query conn ["select * from security where isin=?" (:isin security)])]
-                             rows)))
+    (let [rows (jdbc/query conn ["select * from security where isin=?" (:isin security)])]
+      rows)))
 (defn check [security]
   ;;TODO: Check if toucan can deal with sparse maps
   (db/select Security security))
