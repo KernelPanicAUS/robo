@@ -1,4 +1,5 @@
 (ns backend.yahoo.market-sync
+  (:refer-clojure :exclude [contains? format zero? min max future iterate range future-call])
   (:require [backend.models.security :refer [get-all]]
             [taoensso.timbre :as timbre]
             [backend.yahoo.client :as client]

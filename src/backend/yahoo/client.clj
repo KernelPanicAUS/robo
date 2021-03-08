@@ -1,4 +1,5 @@
 (ns backend.yahoo.client
+  (:refer-clojure :exclude [contains? format zero? min max future iterate range future-call])
   (:require [clj-http.client :as http]
             [cheshire.core :refer :all]
             [clojure.data.csv :as csv]
