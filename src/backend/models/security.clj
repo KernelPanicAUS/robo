@@ -3,7 +3,8 @@
             [backend.models.common :refer :all]
             [toucan.models :refer :all]
             [backend.db :refer [datasource]]
-            [clojure.java.jdbc :as jdbc])
+            [clojure.java.jdbc :as jdbc]
+            [taoensso.timbre :as timbre])
   (:gen-class))
 
 (declare Security)
@@ -32,4 +33,4 @@
     (let [security (check2 new-security)]
       (if (empty? security) (db/insert! Security new-security)))
     (catch Exception e
-      (println "exception: " (.getMessage e)))))
+      (timbre/error "exception: " (.getMessage e)))))

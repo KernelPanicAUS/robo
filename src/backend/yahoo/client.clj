@@ -7,7 +7,7 @@
             [taoensso.timbre :as timbre])
   (:use java-time)
   (:gen-class)
-  (:import (java.time ZoneId ZonedDateTime LocalDate LocalTime)))
+  (:import (java.time ZoneId ZonedDateTime LocalTime)))
 
 (def symbol_lookup_url "https://query1.finance.yahoo.com/v1/finance/search")
 
@@ -48,7 +48,7 @@
                                                                                  "frequency"            "1d",
                                                                                  "includeAdjustedClose" "true"}}))
       (catch Exception e
-        (println "error occurred" (.getMessage e))))))
+        (timbre/error "error occurred" (.getMessage e))))))
 
 (defn- csv-data->maps [csv-data]
   ;(timbre/debug "Mapping csv headers to map keys...")
