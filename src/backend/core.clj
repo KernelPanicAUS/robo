@@ -23,7 +23,7 @@
 
 (defn -main []
   (log/merge-config!
-   {:appenders {:println {appender/rolling-appender {:path "logs/output.log", :pattern :daily}}}})
+   {:appenders {:spit {appender/rolling-appender {:path "logs/output.log", :pattern :daily}}}})
   (log/set-level! :info)
   (log/info "Starting app...")
   (start-app)
