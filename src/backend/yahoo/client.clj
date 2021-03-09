@@ -4,7 +4,7 @@
             [cheshire.core :refer :all]
             [clojure.data.csv :as csv]
             [clojure.java.io :as io]
-            [taoensso.timbre :as timbre])
+            [taoensso.timbre :as log])
   (:use java-time)
   (:gen-class)
   (:import (java.time ZoneId ZonedDateTime LocalTime)))
@@ -37,7 +37,7 @@
        :symbol))
 
 (defn- stream-csv [symbol days]
-  (timbre/info (str "Fetching market performance data for " symbol " going back " days " days..."))
+  (log/info (str "Fetching market performance data for " symbol " going back " days " days..."))
   (let [period1 (get-epoch-seconds-for-days-ago days),
         period2 (get-epoch-seconds)]
     (try
@@ -48,7 +48,7 @@
                                                                                  "frequency"            "1d",
                                                                                  "includeAdjustedClose" "true"}}))
       (catch Exception e
-        (timbre/error "error occurred" (.getMessage e))))))
+        (log/error "error occurred" (.getMessage e))))))
 
 (defn- csv-data->maps [csv-data]
   ;(timbre/debug "Mapping csv headers to map keys...")

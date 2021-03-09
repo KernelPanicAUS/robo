@@ -6,12 +6,12 @@
    [cheshire.core :as json]
    [toucan.models :as models]
    [backend.config :as config]
-   [taoensso.timbre :as timbre])
+   [taoensso.timbre :as log])
   (:import [org.flywaydb.core Flyway]
            [org.postgresql.util PGobject]))
 
 (defn- make-datasource []
-  (timbre/info "Instantiating hikari datasource...")
+  (log/info "Instantiating hikari datasource...")
   (hikari/make-datasource (config/database)))
 
 (mount/defstate datasource
@@ -19,7 +19,7 @@
   :stop (hikari/close-datasource datasource))
 
 (defn migrate []
-  (timbre/info "running flyway db migrations...")
+  (log/info "running flyway db migrations...")
   (.. (Flyway/configure)
       (dataSource datasource)
       (locations (into-array String ["classpath:db/migration"]))
@@ -38,7 +38,7 @@
     (.setValue (json/generate-string value))))
 
 (defn- configure-toucan []
-  (timbre/info "Configuring toucan...")
+  (log/info "Configuring toucan...")
   (db/set-default-db-connection! {:datasource datasource})
   (models/set-root-namespace! 'backend.models)
   ;(models/invoke-model-or-instance)

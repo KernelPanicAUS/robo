@@ -18,7 +18,8 @@
                  [com.taoensso/timbre "4.10.0"]
                  [clojure.java-time "0.3.2"]
                  [cc.qbits/knit "1.0.0"]
-                 [schejulure "1.0.1"]]
+                 [schejulure "1.0.1"]
+                 [com.fzakaria/slf4j-timbre "0.3.20"]]
   :main ^:skip-aot backend.core
   :repl-options {:init-ns backend.core}
   :source-paths ["src/"]
