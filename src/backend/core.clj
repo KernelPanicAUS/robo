@@ -6,7 +6,7 @@
             [backend.config :as config]
             [clojure.spec.alpha :as s]
             [taoensso.timbre :as log]
-            [taoensso.timbre.appenders.3rd-party.rolling :as appender]
+            [taoensso.timbre.appenders.3rd-party.rolling :refer [rolling-appender]]
             [backend.yahoo.market-sync :refer [sync-securities]])
   (:gen-class))
 
@@ -23,7 +23,7 @@
 
 (defn -main []
   (log/merge-config!
-   {:appenders {:spit {appender/rolling-appender {:path "logs/output.log", :pattern :daily}}}})
+   {:appenders {:spit (rolling-appender {:path "logs/backend.log", :patten :daily})}})
   (log/set-level! :info)
   (log/info "Starting app...")
   (start-app)
