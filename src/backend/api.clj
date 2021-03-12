@@ -19,44 +19,44 @@
 
 (def app
   (http/ring-handler
-    (http/router
-      [["/swagger.json"
-        {:get {:no-doc  true
-               :swagger {:info {:title       "my-api"
-                                :description "with reitit-http"}}
-               :handler (swagger/create-swagger-handler)}}]]
+   (http/router
+    [["/swagger.json"
+      {:get {:no-doc  true
+             :swagger {:info {:title       "my-api"
+                              :description "with reitit-http"}}
+             :handler (swagger/create-swagger-handler)}}]]
 
-      { ;:reitit.interceptor/transform dev/print-context-diffs ;; pretty context diffs
+    {;:reitit.interceptor/transform dev/print-context-diffs ;; pretty context diffs
        ;;:validate spec/validate ;; enable spec validation for route data
        ;;:reitit.spec/wrap spell/closed ;; strict top-level validation
-       :reitit.middleware/transform print-request-diffs
-       :exception pretty/exception
-       :data      {:coercion     reitit.coercion.spec/coercion
-                   :muuntaja     m/instance
-                   :interceptors [;; swagger feature
-                                  swagger/swagger-feature
+     :reitit.middleware/transform print-request-diffs
+     :exception pretty/exception
+     :data      {:coercion     reitit.coercion.spec/coercion
+                 :muuntaja     m/instance
+                 :interceptors [;; swagger feature
+                                swagger/swagger-feature
                                   ;; query-params & form-params
-                                  (parameters/parameters-interceptor)
+                                (parameters/parameters-interceptor)
                                   ;; content-negotiation
-                                  (muuntaja/format-negotiate-interceptor)
+                                (muuntaja/format-negotiate-interceptor)
                                   ;; encoding response body
-                                  (muuntaja/format-response-interceptor)
+                                (muuntaja/format-response-interceptor)
                                   ;; exception handling
-                                  (exception/exception-interceptor)
+                                (exception/exception-interceptor)
                                   ;; decoding request body
-                                  (muuntaja/format-request-interceptor)
+                                (muuntaja/format-request-interceptor)
                                   ;; coercing response bodies
-                                  (coercion/coerce-response-interceptor)
+                                (coercion/coerce-response-interceptor)
                                   ;; coercing request parameters
-                                  (coercion/coerce-request-interceptor)
+                                (coercion/coerce-request-interceptor)
                                   ;; multipart
-                                  (multipart/multipart-interceptor)]}})
-    (ring/routes
-      (swagger-ui/create-swagger-ui-handler
-        {:path   "/"
-         :config {:validatorUrl     nil
-                  :operationsSorter "alpha"}})
-      (ring/create-default-handler))
-    {:executor sieppari/executor}))
+                                (multipart/multipart-interceptor)]}})
+   (ring/routes
+    (swagger-ui/create-swagger-ui-handler
+     {:path   "/"
+      :config {:validatorUrl     nil
+               :operationsSorter "alpha"}})
+    (ring/create-default-handler))
+   {:executor sieppari/executor}))
 
 (mount/defstate api :start (jetty/run-jetty #'app {:port 6100, :join? false, :async true}))
