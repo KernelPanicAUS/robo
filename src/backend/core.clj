@@ -4,6 +4,7 @@
             [mount.core :as mount]
             [backend.db :as db]
             [backend.config :as config]
+            [backend.api :as api]
             [clojure.spec.alpha :as s]
             [taoensso.timbre :as log]
             [taoensso.timbre.appenders.3rd-party.rolling :refer [rolling-appender]]
@@ -33,7 +34,7 @@
   (mount/stop))
 
 (defn migrate-database []
-  (mount/start #'config/root #'db/datasource)
+  (mount/start #'config/root #'db/datasource #'api/api)
   (db/migrate)
   ;(mount/stop)
   )

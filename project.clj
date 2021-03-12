@@ -3,7 +3,7 @@
   :url "http://example.com/FIXME"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
             :url  "https://www.eclipse.org/legal/epl-2.0/"}
-  :dependencies [[org.clojure/clojure "1.10.1"]
+  :dependencies [[org.clojure/clojure "1.10.2"]
                  [clj-http "3.12.0"]
                  [crouton "0.1.2"]
                  [cheshire "5.10.0"]
@@ -20,7 +20,12 @@
                  [cc.qbits/knit "1.0.0"]
                  [schejulure "1.0.1"]
                  [com.fzakaria/slf4j-timbre "0.3.20"]
-                 [io.aviso/pretty "0.1.37"]]
+                 [io.aviso/pretty "0.1.37"]
+                 [metosin/reitit "0.5.12"]
+                 [metosin/reitit-swagger "0.5.12"]
+                 [metosin/reitit-swagger-ui "0.5.12"]
+                 [ring/ring-jetty-adapter "1.7.1"]
+                 [com.fasterxml.jackson.core/jackson-core "2.12.2"]]
   :main ^:skip-aot backend.core
   :repl-options {:init-ns backend.core}
   :source-paths ["src/"]
