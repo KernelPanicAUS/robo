@@ -10,3 +10,6 @@
 
 (defn database []
   (get-in root [:app :database]))
+
+(defn yahoo []
+  (get-in root [:app :jobs :yahoo]))

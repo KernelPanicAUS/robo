@@ -48,7 +48,8 @@
                                                                                  "frequency"            "1d",
                                                                                  "includeAdjustedClose" "true"}}))
       (catch Exception e
-        (log/error "error occurred" (.getMessage e))))))
+        (log/error (str symbol " - error occurred :" "status: " e))
+        (throw e)))))
 
 (defn- csv-data->maps [csv-data]
   ;(timbre/debug "Mapping csv headers to map keys...")

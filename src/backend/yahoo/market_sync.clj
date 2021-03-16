@@ -1,16 +1,19 @@
 (ns backend.yahoo.market-sync
-  (:refer-clojure :exclude [contains? format zero? min max future iterate range future-call])
+  (:refer-clojure :exclude [contains? format zero? min max iterate range])
   (:require [backend.models.security :refer [get-all]]
             [taoensso.timbre :as log]
             [backend.yahoo.client :as client]
             [backend.models.price :refer [create-price]]
-            [schejulure.core :as sched])
-  (:gen-class)
-  (:use java-time)
-  (:use qbits.knit))
+            [java-time :refer :all]
+            [schejulure.core :as sched]
+            [backend.config :as config]
+            [mount.core :as mount])
+  (:import (java.util.concurrent Executors)))
 
-(def days-ago 2)
-(def x (executor :fixed {:num-threads 10}))
+(mount/defstate config :start (config/yahoo))
+(mount/defstate pool
+                :start (Executors/newFixedThreadPool (get-in config [:pool-size]))
+                :stop (.shutdown pool))
 
 (defn- get-securities []
   (log/info "Loading securities from db...")
@@ -32,20 +35,21 @@
         security-id (:id security)
         cpe (partial create-price-entry security-id symbol)]
     (log/info (str "Running sync for " symbol "..."))
-    (execute x
-             #(->> (client/get-security-price symbol days-ago)
-                   (remove nil?)
-                   (run! cpe)))
-    (log/info (str "Task submitted for " symbol))))
+
+    (log/info (str "Task submitted for " symbol))
+    #(->> (client/get-security-price symbol (get-in config [:days-ago]))
+          (remove nil?)
+          (run! cpe))))
 
 (defn sync-securities []
   (log/info "Starting sync for securities against yahoo! finance api...")
-  (let [securities (get-securities)]
-    (doall (map #(sync-security %) securities))
-    (log/info "Sync completed!")))
+  (log/info (str config))
+  (let [tasks (map sync-security (get-securities))
+        ret (.invokeAll pool tasks)]
+    (map #(.get %) ret))
+  (log/info "Sync completed!"))
 
 (defn sync-scheduler []
-  (sched/schedule {:hour   01
-                   :minute 00
-                   :day    [:tue :wed :thur :fri :sat]}
-                  sync-securities))
+  (sched/schedule (get-in config [:schedule]) sync-securities))
+
+

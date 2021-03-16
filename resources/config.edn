@@ -5,4 +5,11 @@
    :password      "robo"
    :database-name "robo"
    :server-name   "morpheus.local"
-   :port-number   5432}}}
+   :port-number   5432}
+  :jobs
+  {:yahoo
+   {:days-ago  7
+    :pool-size 10
+    :schedule  {:hour   01
+                :minute 00
+                :day    [:tue :wed :thur :fri :sat]}}}}}

@@ -1,3 +1,4 @@
+(def reitit-version "0.5.11")
 (defproject backend "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
@@ -17,16 +18,15 @@
                  [aero "1.1.6"]
                  [com.taoensso/timbre "4.10.0"]
                  [clojure.java-time "0.3.2"]
-                 [cc.qbits/knit "1.0.0"]
                  [schejulure "1.0.1"]
                  [com.fzakaria/slf4j-timbre "0.3.20"]
                  [io.aviso/pretty "0.1.37"]
-                 [metosin/reitit "0.5.12"]
-                 [metosin/reitit-swagger "0.5.12"]
-                 [metosin/reitit-swagger-ui "0.5.12"]
-                 [ring/ring-jetty-adapter "1.7.1"]
+                 [metosin/reitit ~reitit-version :exclusions [org.clojure/spec.alpha ring/ring-core commons-fileupload]]
+                 [metosin/reitit-swagger ~reitit-version :exclusions [ring/ring-codec]]
+                 [metosin/reitit-swagger-ui ~reitit-version :exclusions [ring/ring-core commons-fileupload]]
+                 [ring/ring-jetty-adapter "1.7.1" :exclusions [clj-time]]
                  [com.fasterxml.jackson.core/jackson-core "2.12.2"]]
-  :main ^:skip-aot backend.core
+  :main backend.core
   :repl-options {:init-ns backend.core}
   :source-paths ["src/"]
   :middleware [io.aviso.lein-pretty/inject]

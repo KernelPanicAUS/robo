@@ -8,7 +8,8 @@
             [clojure.spec.alpha :as s]
             [taoensso.timbre :as log]
             [taoensso.timbre.appenders.3rd-party.rolling :refer [rolling-appender]]
-            [backend.yahoo.market-sync :refer [sync-securities]])
+            [backend.yahoo.market-sync :refer [sync-securities]]
+            [backend.yahoo.market-sync :as yahoo])
   (:gen-class))
 
 (defn start-app
@@ -34,7 +35,7 @@
   (mount/stop))
 
 (defn migrate-database []
-  (mount/start #'config/root #'db/datasource #'api/api)
+  (mount/start #'config/root #'db/datasource #'api/api #'yahoo/config #'yahoo/pool)
   (db/migrate)
   ;(mount/stop)
   )
